@@ -1,10 +1,10 @@
-# LLM Risk Taxonomy for Financial Services: A Four-Dimension Framework
+﻿# LLM Risk Taxonomy for Financial Services: A Four-Dimension Framework
 
 ## File Metadata
-- **Scope:** Four-dimension risk taxonomy for LLMs in financial services — Model Risk, Data Risk, Operational Risk, and Conduct/Consumer Risk — with controls and residual risk assessment
-- **Cluster:** C — Gen AI and LLM Governance
+- **Scope:** Four-dimension risk taxonomy for LLMs in financial services â€” Model Risk, Data Risk, Operational Risk, and Conduct/Consumer Risk â€” with controls and residual risk assessment
+- **Cluster:** C â€” Gen AI and LLM Governance
 - **Reading order:** 8/14
-- **Related files:** [07_genai_governance_banking.md](07_genai_governance_banking.md), [09_agentic_ai_governance.md](09_agentic_ai_governance.md), [11_big_tech_mrm_guidance.md](11_big_tech_mrm_guidance.md), [12_explainability_fairness_bias.md](12_explainability_fairness_bias.md), [../refs/owasp_top10_llm.md](../refs/owasp_top10_llm.md)
+- **Related files:** [07_genai_governance_banking.md](07_genai_governance_banking.md), [09_agentic_ai_governance.md](09_agentic_ai_governance.md), [11_big_tech_mrm_guidance.md](11_big_tech_mrm_guidance.md), [12_explainability_fairness_bias.md](12_explainability_fairness_bias.md), [../standards/owasp_top10_llm.md](../standards/owasp_top10_llm.md)
 - **Regulators/bodies covered:** Federal Reserve, OCC, FCA, CFPB, BCBS, FSB, NIST
 - **Tags:** LLM-risk, hallucination, prompt-injection, data-poisoning, PII-memorization, conduct-risk, consumer-risk, discriminatory-AI, risk-taxonomy, OWASP-LLM, operational-risk, vendor-concentration
 
@@ -12,33 +12,33 @@
 
 ## 1. Introduction: Why Financial Services Needs an LLM-Specific Risk Taxonomy
 
-Traditional model risk management taxonomies — developed primarily for quantitative statistical models — do not map cleanly onto the risk surface of large language models. A credit scorecard's risks are primarily statistical: overfitting, sample selection bias, temporal instability. A market risk VaR model's risks are primarily mathematical: distributional assumptions, correlation breakdown under stress. The SR 11-7 framework was designed to manage these categories of model risk.
+Traditional model risk management taxonomies â€” developed primarily for quantitative statistical models â€” do not map cleanly onto the risk surface of large language models. A credit scorecard's risks are primarily statistical: overfitting, sample selection bias, temporal instability. A market risk VaR model's risks are primarily mathematical: distributional assumptions, correlation breakdown under stress. The SR 11-7 framework was designed to manage these categories of model risk.
 
-LLMs introduce an entirely different and substantially broader risk surface. They can generate discriminatory text as readily as they generate helpful text. They can memorize and reproduce training data verbatim, exposing PII at inference time. They can be manipulated through crafted inputs in ways that have no analog in traditional model governance. They are deployed through supply chains involving foundation model providers, cloud infrastructure operators, and third-party plugin developers — each introducing independent risk. And because they are used to generate customer communications, compliance interpretations, and decision support, the conduct implications of LLM errors are potentially severe.
+LLMs introduce an entirely different and substantially broader risk surface. They can generate discriminatory text as readily as they generate helpful text. They can memorize and reproduce training data verbatim, exposing PII at inference time. They can be manipulated through crafted inputs in ways that have no analog in traditional model governance. They are deployed through supply chains involving foundation model providers, cloud infrastructure operators, and third-party plugin developers â€” each introducing independent risk. And because they are used to generate customer communications, compliance interpretations, and decision support, the conduct implications of LLM errors are potentially severe.
 
 This file provides a comprehensive, four-dimension risk taxonomy for LLMs in financial services. Each risk is assessed for likelihood in financial services contexts, potential impacts, key controls, and residual risk after controls. The taxonomy is designed to support risk identification and classification work, model risk committee reporting, AI governance policy development, and regulatory examination preparation.
 
 The four dimensions are:
-1. **Model Risk** — risks arising from the LLM's technical characteristics and behavior
-2. **Data Risk** — risks arising from training data, fine-tuning data, and retrieval corpora
-3. **Operational Risk** — risks arising from the infrastructure, deployment, and supply chain
-4. **Conduct and Consumer Risk** — risks arising from the effect of LLM outputs on customers and markets
+1. **Model Risk** â€” risks arising from the LLM's technical characteristics and behavior
+2. **Data Risk** â€” risks arising from training data, fine-tuning data, and retrieval corpora
+3. **Operational Risk** â€” risks arising from the infrastructure, deployment, and supply chain
+4. **Conduct and Consumer Risk** â€” risks arising from the effect of LLM outputs on customers and markets
 
-For specific security risk descriptions (prompt injection, supply chain, output integrity), cross-reference `../refs/owasp_top10_llm.md` rather than this file.
+For specific security risk descriptions (prompt injection, supply chain, output integrity), cross-reference `../standards/owasp_top10_llm.md` rather than this file.
 
 ---
 
 ## 2. Dimension 1: Model Risk
 
-Model risk for LLMs encompasses the risks that arise from the inherent technical characteristics of the model itself — its output behavior, its calibration, its stability, and the limits of our ability to validate it.
+Model risk for LLMs encompasses the risks that arise from the inherent technical characteristics of the model itself â€” its output behavior, its calibration, its stability, and the limits of our ability to validate it.
 
 ### 2.1 Hallucination Risk
 
 **Risk Description:** Hallucination is the generation of outputs that are factually incorrect, internally inconsistent, or fabricated, presented with fluency and apparent confidence indistinguishable from accurate outputs. The term encompasses several distinct failure modes: factual confabulation (inventing facts not in training data), citation hallucination (fabricating sources or misattributing quotes), logical inconsistency (producing outputs that contradict each other or the provided context), and entity confusion (misidentifying named entities, regulatory codes, or financial instruments).
 
-Hallucination is not a bug to be fixed but a structural feature of how LLMs generate text: they predict the most statistically likely next token given context, which is not the same as the most factually accurate next token. Retrieval-Augmented Generation significantly reduces hallucination for factual recall tasks but does not eliminate it — models can still misinterpret retrieved documents, interpolate between conflicting sources, or generate conclusions not supported by retrieved evidence.
+Hallucination is not a bug to be fixed but a structural feature of how LLMs generate text: they predict the most statistically likely next token given context, which is not the same as the most factually accurate next token. Retrieval-Augmented Generation significantly reduces hallucination for factual recall tasks but does not eliminate it â€” models can still misinterpret retrieved documents, interpolate between conflicting sources, or generate conclusions not supported by retrieved evidence.
 
-**Likelihood in Financial Services:** High. Research indicates hallucination rates of 3%–27% depending on model and task type. At operational scale — thousands of queries per day — even a 3% hallucination rate produces hundreds of potentially incorrect outputs daily. High-stakes financial tasks (regulatory interpretation, loan underwriting documentation, compliance sign-off) face elevated hallucination risk because they require precise, nuanced accuracy rather than general fluency.
+**Likelihood in Financial Services:** High. Research indicates hallucination rates of 3%â€“27% depending on model and task type. At operational scale â€” thousands of queries per day â€” even a 3% hallucination rate produces hundreds of potentially incorrect outputs daily. High-stakes financial tasks (regulatory interpretation, loan underwriting documentation, compliance sign-off) face elevated hallucination risk because they require precise, nuanced accuracy rather than general fluency.
 
 **Potential Impact:**
 - *Financial:* Erroneous financial information leading to customer losses; regulatory fines for material misstatements; reprocessing costs for transactions initiated on hallucinated data
@@ -61,11 +61,11 @@ Hallucination is not a bug to be fixed but a structural feature of how LLMs gene
 
 ### 2.2 Prompt Sensitivity Risk
 
-**Risk Description:** LLM outputs change materially in response to minor variations in prompt wording, structure, ordering of information, or conversational context. Studies have demonstrated that changing the ordering of multiple-choice answer options can shift benchmark accuracy by up to 13%. Adding or removing a single sentence of context can shift outputs between compliant and non-compliant responses. This sensitivity means that prompt templates — designed and tested at deployment time — may produce systematically different outputs in production when user-provided context is added, when conversation history accumulates, or when minor paraphrasing occurs.
+**Risk Description:** LLM outputs change materially in response to minor variations in prompt wording, structure, ordering of information, or conversational context. Studies have demonstrated that changing the ordering of multiple-choice answer options can shift benchmark accuracy by up to 13%. Adding or removing a single sentence of context can shift outputs between compliant and non-compliant responses. This sensitivity means that prompt templates â€” designed and tested at deployment time â€” may produce systematically different outputs in production when user-provided context is added, when conversation history accumulates, or when minor paraphrasing occurs.
 
 Prompt sensitivity also manifests across languages: a system prompt designed and tested in English may behave differently when users interact in French, Mandarin, or Arabic, due to differences in how the model's training data represents different languages and concepts.
 
-**Likelihood in Financial Services:** High. Financial institutions rely on system prompts and instruction templates to constrain LLM behavior — ensuring appropriate risk disclosures, preventing advice-giving in non-advisory contexts, maintaining regulatory compliance messaging. Prompt sensitivity creates persistent risk that these controls function as designed in test but not in production.
+**Likelihood in Financial Services:** High. Financial institutions rely on system prompts and instruction templates to constrain LLM behavior â€” ensuring appropriate risk disclosures, preventing advice-giving in non-advisory contexts, maintaining regulatory compliance messaging. Prompt sensitivity creates persistent risk that these controls function as designed in test but not in production.
 
 **Potential Impact:**
 - *Regulatory:* Compliance controls in system prompts may be bypassed by user conversational patterns, creating regulatory exposure
@@ -85,7 +85,7 @@ Prompt sensitivity also manifests across languages: a system prompt designed and
 
 ### 2.3 Context Window Limitation Risk
 
-**Risk Description:** LLMs process input through a context window — a fixed maximum number of tokens that can be attended to simultaneously. While context windows have grown substantially (many frontier models now support 128,000+ tokens), there are two persistent risks. First, when input exceeds the context window, earlier content is silently truncated — models do not warn users that information has been dropped. For a financial institution processing long regulatory documents or multi-day conversation histories, truncation can cause the model to miss material information. Second, research has demonstrated that LLMs struggle to utilize information embedded in the middle of very long contexts (the "lost in the middle" problem) — performance degrades for content not located near the beginning or end of the context window even when the total length fits within the maximum.
+**Risk Description:** LLMs process input through a context window â€” a fixed maximum number of tokens that can be attended to simultaneously. While context windows have grown substantially (many frontier models now support 128,000+ tokens), there are two persistent risks. First, when input exceeds the context window, earlier content is silently truncated â€” models do not warn users that information has been dropped. For a financial institution processing long regulatory documents or multi-day conversation histories, truncation can cause the model to miss material information. Second, research has demonstrated that LLMs struggle to utilize information embedded in the middle of very long contexts (the "lost in the middle" problem) â€” performance degrades for content not located near the beginning or end of the context window even when the total length fits within the maximum.
 
 **Likelihood in Financial Services:** Medium-High. Banks routinely work with long documents: regulatory filings, loan agreements, prospectuses, multi-year audit trails. Deploying LLMs to analyze these documents without context management controls creates risk.
 
@@ -107,11 +107,11 @@ Prompt sensitivity also manifests across languages: a system prompt designed and
 
 ### 2.4 Model Version Drift Risk
 
-**Risk Description:** For banks accessing foundation models through vendor APIs, the model being served may change without the bank's knowledge or consent. Behavioral updates can be pushed to a model version without a new version name, API changelog entry, or advance customer notification. A longitudinal study published in 2026 confirmed "meaningful behavioral drift across deployed transformer services" over a ten-week period, with some models exhibiting systematically shorter, less detailed responses after undisclosed updates. For institutions that rely on consistent model behavior as a control — for example, a model consistently refusing to provide advice outside its defined scope — undisclosed behavioral updates can silently undermine those controls.
+**Risk Description:** For banks accessing foundation models through vendor APIs, the model being served may change without the bank's knowledge or consent. Behavioral updates can be pushed to a model version without a new version name, API changelog entry, or advance customer notification. A longitudinal study published in 2026 confirmed "meaningful behavioral drift across deployed transformer services" over a ten-week period, with some models exhibiting systematically shorter, less detailed responses after undisclosed updates. For institutions that rely on consistent model behavior as a control â€” for example, a model consistently refusing to provide advice outside its defined scope â€” undisclosed behavioral updates can silently undermine those controls.
 
 Under SR 11-7 (and its successor SR 26-2), a material change to model behavior requires re-validation. If the model is changing silently, the bank cannot identify when re-validation is required.
 
-**Likelihood in Financial Services:** High. All banks using frontier model APIs are exposed to this risk. It is not a hypothetical — OpenAI pushed a behavioral update to GPT-4o in April 2025 without advance notification.
+**Likelihood in Financial Services:** High. All banks using frontier model APIs are exposed to this risk. It is not a hypothetical â€” OpenAI pushed a behavioral update to GPT-4o in April 2025 without advance notification.
 
 **Potential Impact:**
 - *Regulatory:* Undetected model changes may mean deployed models have not been re-validated after material changes, creating SR 26-2 examination findings
@@ -173,7 +173,7 @@ Under SR 11-7 (and its successor SR 26-2), a material change to model behavior r
 
 ### 2.7 Emergent Capability Risk
 
-**Risk Description:** Foundation models exhibit emergent capabilities — behaviors that appear as models scale in parameter count, training data, and compute. These emergent capabilities are difficult to predict and may not be apparent during pre-deployment testing. An LLM deployed for document summarization may demonstrate emergent capabilities in financial reasoning, code generation, or persuasion that the deploying institution never tested for and has no controls around. The challenge is compounded by the fact that foundation models continue to be updated, potentially introducing new emergent capabilities in models the bank is already running in production.
+**Risk Description:** Foundation models exhibit emergent capabilities â€” behaviors that appear as models scale in parameter count, training data, and compute. These emergent capabilities are difficult to predict and may not be apparent during pre-deployment testing. An LLM deployed for document summarization may demonstrate emergent capabilities in financial reasoning, code generation, or persuasion that the deploying institution never tested for and has no controls around. The challenge is compounded by the fact that foundation models continue to be updated, potentially introducing new emergent capabilities in models the bank is already running in production.
 
 **Likelihood in Financial Services:** Medium-High. The risk is highest for broad-scope deployments (general-purpose chat assistants, unconstrained research tools) and lowest for narrow-scope applications (document summarization with strict output format requirements).
 
@@ -195,7 +195,7 @@ Under SR 11-7 (and its successor SR 26-2), a material change to model behavior r
 
 ### 2.8 Benchmark Gaming and Goodhart's Law for LLM Evaluation
 
-**Risk Description:** Goodhart's Law states: "when a measure becomes a target, it ceases to be a good measure." This principle applies powerfully to LLM evaluation. Foundation model providers optimize performance on public benchmarks (MMLU, HumanEval, etc.) during training. Models can perform well on benchmarks while failing on closely related real-world tasks — "contaminating" the test set with training data, or optimizing for superficial patterns rather than genuine capability. Research has demonstrated that changing the ordering of multiple-choice answers in MMLU can decrease accuracy by up to 13%, indicating that some performance reflects pattern matching rather than reasoning.
+**Risk Description:** Goodhart's Law states: "when a measure becomes a target, it ceases to be a good measure." This principle applies powerfully to LLM evaluation. Foundation model providers optimize performance on public benchmarks (MMLU, HumanEval, etc.) during training. Models can perform well on benchmarks while failing on closely related real-world tasks â€” "contaminating" the test set with training data, or optimizing for superficial patterns rather than genuine capability. Research has demonstrated that changing the ordering of multiple-choice answers in MMLU can decrease accuracy by up to 13%, indicating that some performance reflects pattern matching rather than reasoning.
 
 For banks that rely on vendor-reported benchmark performance to justify model selection, benchmark gaming creates a risk that selected models underperform in production relative to pre-deployment evaluation.
 
@@ -217,7 +217,7 @@ For banks that rely on vendor-reported benchmark performance to justify model se
 
 ### 2.9 Overconfidence Calibration Failures
 
-**Risk Description:** Well-calibrated probabilistic models express uncertainty proportional to their actual accuracy — a model saying it is 90% confident should be right 90% of the time. LLMs are often poorly calibrated: they express high confidence for correct and incorrect answers alike. This overconfidence is particularly dangerous in financial services, where users often rely on expressed confidence as a signal of reliability. An LLM that says "the capital requirement under CRR2 Article 92 is X%" with complete confidence when it is actually wrong by a factor of two is more dangerous than a model that flags its own uncertainty.
+**Risk Description:** Well-calibrated probabilistic models express uncertainty proportional to their actual accuracy â€” a model saying it is 90% confident should be right 90% of the time. LLMs are often poorly calibrated: they express high confidence for correct and incorrect answers alike. This overconfidence is particularly dangerous in financial services, where users often rely on expressed confidence as a signal of reliability. An LLM that says "the capital requirement under CRR2 Article 92 is X%" with complete confidence when it is actually wrong by a factor of two is more dangerous than a model that flags its own uncertainty.
 
 **Likelihood in Financial Services:** High. LLMs consistently present outputs with the same fluency and confidence tone regardless of actual accuracy. Most enterprise deployments do not implement uncertainty quantification.
 
@@ -237,7 +237,7 @@ For banks that rely on vendor-reported benchmark performance to justify model se
 
 ### 2.10 Out-of-Distribution Behavior
 
-**Risk Description:** LLMs trained on web-scale text corpora may perform reliably for tasks well-represented in training data but behave erratically for novel inputs — financial instruments introduced after the training cutoff, newly enacted regulatory frameworks, proprietary terminology specific to a particular institution. Out-of-distribution inputs are particularly likely in financial services because the domain uses specialized terminology, evolves with regulatory changes, and involves novel financial structures.
+**Risk Description:** LLMs trained on web-scale text corpora may perform reliably for tasks well-represented in training data but behave erratically for novel inputs â€” financial instruments introduced after the training cutoff, newly enacted regulatory frameworks, proprietary terminology specific to a particular institution. Out-of-distribution inputs are particularly likely in financial services because the domain uses specialized terminology, evolves with regulatory changes, and involves novel financial structures.
 
 **Likelihood in Financial Services:** High. Financial terminology, regulations, and products evolve continuously. Models trained with data cutoffs of 12-24 months lag real-world financial service environments.
 
@@ -261,9 +261,9 @@ Data risk for LLMs encompasses risks arising from the data used to train and fin
 
 ### 3.1 Training Data Contamination
 
-**Risk Description:** Foundation model training data is assembled from massive web corpora, books, code repositories, and other sources. This data is not curated with financial services standards: it contains biased content, outdated information, contested assertions, and in some cases factually wrong financial information. The Common Crawl corpus — a primary training data source for many frontier models — contains web content spanning decades, including superseded regulatory guidance, incorrect financial information, and text produced by non-expert sources. Banks cannot audit the training data composition of closed-source foundation models.
+**Risk Description:** Foundation model training data is assembled from massive web corpora, books, code repositories, and other sources. This data is not curated with financial services standards: it contains biased content, outdated information, contested assertions, and in some cases factually wrong financial information. The Common Crawl corpus â€” a primary training data source for many frontier models â€” contains web content spanning decades, including superseded regulatory guidance, incorrect financial information, and text produced by non-expert sources. Banks cannot audit the training data composition of closed-source foundation models.
 
-Beyond quality issues, training data may be contaminated with content specifically designed to influence model behavior — a form of data poisoning at the corpus level that may not be detectable post-training.
+Beyond quality issues, training data may be contaminated with content specifically designed to influence model behavior â€” a form of data poisoning at the corpus level that may not be detectable post-training.
 
 **Likelihood in Financial Services:** High. All banks using commercial foundation models are exposed to training data quality risk; the magnitude depends on the task and the degree to which outputs are grounded in verified proprietary corpora.
 
@@ -285,7 +285,7 @@ Beyond quality issues, training data may be contaminated with content specifical
 
 ### 3.2 PII Memorization
 
-**Risk Description:** LLMs memorize portions of their training data and can reproduce this data verbatim in response to certain prompts. Research has demonstrated that membership inference attacks — testing whether a specific piece of text was in a model's training data — succeed at rates significantly above random chance. More practically, models can be prompted to regurgitate personally identifiable information present in training data: real names, email addresses, phone numbers, account details if financial records appeared in training data. For fine-tuned models trained on internal bank data, this risk extends to customer PII included in fine-tuning datasets.
+**Risk Description:** LLMs memorize portions of their training data and can reproduce this data verbatim in response to certain prompts. Research has demonstrated that membership inference attacks â€” testing whether a specific piece of text was in a model's training data â€” succeed at rates significantly above random chance. More practically, models can be prompted to regurgitate personally identifiable information present in training data: real names, email addresses, phone numbers, account details if financial records appeared in training data. For fine-tuned models trained on internal bank data, this risk extends to customer PII included in fine-tuning datasets.
 
 A 2025 Truffle Security research project found approximately 12,000 live API keys and passwords in a single major training dataset crawl, with 63% of those secrets appearing across multiple pages. This demonstrates that sensitive credentials can be memorized and potentially reproduced.
 
@@ -309,7 +309,7 @@ A 2025 Truffle Security research project found approximately 12,000 live API key
 
 ### 3.3 Copyright and Intellectual Property Exposure
 
-**Risk Description:** Foundation models trained on web corpora have ingested substantial copyrighted material — books, research papers, news articles, financial research reports, proprietary databases. When these models reproduce substantially similar content at inference time, there is potential copyright liability. Ongoing litigation (New York Times v. OpenAI, class action suits against Anthropic) has not yet produced definitive judicial rulings on whether training on copyrighted data constitutes infringement, but the legal risk is live and material. For banks that use LLMs to generate content, the concern is whether model-generated output could constitute a copyright derivative work creating liability.
+**Risk Description:** Foundation models trained on web corpora have ingested substantial copyrighted material â€” books, research papers, news articles, financial research reports, proprietary databases. When these models reproduce substantially similar content at inference time, there is potential copyright liability. Ongoing litigation (New York Times v. OpenAI, class action suits against Anthropic) has not yet produced definitive judicial rulings on whether training on copyrighted data constitutes infringement, but the legal risk is live and material. For banks that use LLMs to generate content, the concern is whether model-generated output could constitute a copyright derivative work creating liability.
 
 Additionally, if a bank's proprietary financial models, trading algorithms, or research appear in LLM training data (through inadvertent publication or deliberate leakage), those models may be reproduced or described by the LLM.
 
@@ -333,7 +333,7 @@ Additionally, if a bank's proprietary financial models, trading algorithms, or r
 
 ### 3.4 Fine-Tuning Data Leakage
 
-**Risk Description:** When a bank fine-tunes a foundation model on internal data — customer records, loan files, compliance documents, trading data — that data is baked into the model's weights. If the fine-tuned model is later accessed by parties other than intended users (through API exposure, model weight exfiltration, or overly broad query access), training data may be recoverable through targeted prompting. Fine-tuning data leakage is a higher risk than base model memorization because the bank directly controls what data enters fine-tuning and bears responsibility for the resulting risk.
+**Risk Description:** When a bank fine-tunes a foundation model on internal data â€” customer records, loan files, compliance documents, trading data â€” that data is baked into the model's weights. If the fine-tuned model is later accessed by parties other than intended users (through API exposure, model weight exfiltration, or overly broad query access), training data may be recoverable through targeted prompting. Fine-tuning data leakage is a higher risk than base model memorization because the bank directly controls what data enters fine-tuning and bears responsibility for the resulting risk.
 
 **Likelihood in Financial Services:** Medium. This risk is specific to institutions that fine-tune models on internal data. It is not relevant for institutions using commercial API access without fine-tuning.
 
@@ -354,7 +354,7 @@ Additionally, if a bank's proprietary financial models, trading algorithms, or r
 
 ### 3.5 RAG Retrieval Errors
 
-**Risk Description:** Retrieval-Augmented Generation systems retrieve documents from a corpus and pass them as context to the LLM. If the retrieval system returns the wrong documents — semantically related but not directly relevant, outdated versions of the correct documents, or documents from the wrong jurisdiction or product line — the LLM will base its response on incorrect context. The LLM may not detect that retrieved documents are wrong; it will generate fluent, confident-sounding responses based on whatever context is provided. This creates a failure mode where RAG introduces a new class of error: retrieval failure compounded by confident generation.
+**Risk Description:** Retrieval-Augmented Generation systems retrieve documents from a corpus and pass them as context to the LLM. If the retrieval system returns the wrong documents â€” semantically related but not directly relevant, outdated versions of the correct documents, or documents from the wrong jurisdiction or product line â€” the LLM will base its response on incorrect context. The LLM may not detect that retrieved documents are wrong; it will generate fluent, confident-sounding responses based on whatever context is provided. This creates a failure mode where RAG introduces a new class of error: retrieval failure compounded by confident generation.
 
 Research suggests that at deployment scale, even a 5% retrieval error rate translates to a material proportion of outputs potentially based on incorrect source documents.
 
@@ -379,9 +379,9 @@ Research suggests that at deployment scale, even a 5% retrieval error rate trans
 
 ### 3.6 Data Poisoning in RAG Corpus
 
-**Risk Description:** If the RAG retrieval corpus can be manipulated by external parties — either through compromised document ingestion pipelines or through malicious content injection in documents that the system is designed to ingest — an attacker can poison the knowledge base to cause the LLM to produce attacker-controlled outputs. Research published in 2024 demonstrated the PoisonedRAG attack: injecting just 5 malicious documents into a corpus of millions caused the AI system to return attacker-specified false answers 90% of the time for targeted trigger questions. This attack is particularly insidious because the foundation model itself behaves correctly — the manipulation is in the retrieval corpus.
+**Risk Description:** If the RAG retrieval corpus can be manipulated by external parties â€” either through compromised document ingestion pipelines or through malicious content injection in documents that the system is designed to ingest â€” an attacker can poison the knowledge base to cause the LLM to produce attacker-controlled outputs. Research published in 2024 demonstrated the PoisonedRAG attack: injecting just 5 malicious documents into a corpus of millions caused the AI system to return attacker-specified false answers 90% of the time for targeted trigger questions. This attack is particularly insidious because the foundation model itself behaves correctly â€” the manipulation is in the retrieval corpus.
 
-For cross-reference on data poisoning at the LLM level, see `../refs/owasp_top10_llm.md` (LLM04 — Data and Model Poisoning).
+For cross-reference on data poisoning at the LLM level, see `../standards/owasp_top10_llm.md` (LLM04 â€” Data and Model Poisoning).
 
 **Likelihood in Financial Services:** Medium. Internal corpora (bank policies, regulatory documents) are relatively well-controlled. Corpora incorporating external sources (web content, vendor documents, public filings) face higher poisoning risk.
 
@@ -423,7 +423,7 @@ For cross-reference on data poisoning at the LLM level, see `../refs/owasp_top10
 
 ### 3.8 Cross-Contamination in Multi-Tenant Deployments
 
-**Risk Description:** Some financial institutions deploy shared LLM infrastructure serving multiple business units, products, or customer segments. In shared multi-tenant deployments, there is risk that context, memory, or retrieval outputs from one tenant "leak" to another — either through inadequate session isolation in the application layer, or through vector database cross-tenant retrieval in shared RAG architectures. This risk is heightened in cloud-hosted foundation model APIs where the infrastructure is shared across many customers (though leading providers implement isolation at inference time).
+**Risk Description:** Some financial institutions deploy shared LLM infrastructure serving multiple business units, products, or customer segments. In shared multi-tenant deployments, there is risk that context, memory, or retrieval outputs from one tenant "leak" to another â€” either through inadequate session isolation in the application layer, or through vector database cross-tenant retrieval in shared RAG architectures. This risk is heightened in cloud-hosted foundation model APIs where the infrastructure is shared across many customers (though leading providers implement isolation at inference time).
 
 **Likelihood in Financial Services:** Medium. Shared internal deployments are more likely to have cross-tenant risks than commercial APIs with mature isolation controls.
 
@@ -448,7 +448,7 @@ Operational risk for LLMs encompasses risks from infrastructure, deployment, sup
 
 ### 4.1 Latency and Throughput Risk
 
-**Risk Description:** LLMs are computationally intensive and significantly slower than traditional analytical models. A credit scorecard produces a decision in milliseconds; a frontier LLM generating a detailed response may take 2–30 seconds depending on response length and infrastructure. At high query volumes, this latency creates queue buildup, timeout risks, and user experience degradation. For customer-facing applications where response time directly affects satisfaction and engagement, LLM latency is a material operational risk.
+**Risk Description:** LLMs are computationally intensive and significantly slower than traditional analytical models. A credit scorecard produces a decision in milliseconds; a frontier LLM generating a detailed response may take 2â€“30 seconds depending on response length and infrastructure. At high query volumes, this latency creates queue buildup, timeout risks, and user experience degradation. For customer-facing applications where response time directly affects satisfaction and engagement, LLM latency is a material operational risk.
 
 **Likelihood in Financial Services:** High. Most banking use cases involve user-facing applications where latency directly affects product quality.
 
@@ -470,7 +470,7 @@ Operational risk for LLMs encompasses risks from infrastructure, deployment, sup
 
 ### 4.2 API Dependency and Vendor Lock-In
 
-**Risk Description:** Banks that build core applications on a specific foundation model API develop deep technical dependencies: system prompts designed for one model's instruction format, evaluation benchmarks calibrated to one model's characteristics, and fine-tuning data aligned to one model's behavior. Migrating to a different model provider involves re-validation of all dependent applications, which may be impractical at scale. This technical lock-in amplifies the vendor concentration risk described in [07_genai_governance_banking.md](07_genai_governance_banking.md) — even if a bank wants to diversify providers after an incident, migration cost and complexity may prevent rapid response.
+**Risk Description:** Banks that build core applications on a specific foundation model API develop deep technical dependencies: system prompts designed for one model's instruction format, evaluation benchmarks calibrated to one model's characteristics, and fine-tuning data aligned to one model's behavior. Migrating to a different model provider involves re-validation of all dependent applications, which may be impractical at scale. This technical lock-in amplifies the vendor concentration risk described in [07_genai_governance_banking.md](07_genai_governance_banking.md) â€” even if a bank wants to diversify providers after an incident, migration cost and complexity may prevent rapid response.
 
 **Likelihood in Financial Services:** Medium-High. Most banks have developed deep dependencies on one or two foundation model providers.
 
@@ -512,7 +512,7 @@ Operational risk for LLMs encompasses risks from infrastructure, deployment, sup
 
 ### 4.4 Rate Limiting and Availability Risk
 
-**Risk Description:** Foundation model APIs impose rate limits — maximum requests per minute, maximum tokens per minute — that can constrain throughput for high-volume applications. Rate limit encounters cause either API errors (hard failures) or queuing delays (soft failures). For applications where response time is critical — fraud detection assistance, real-time customer service — rate limiting can cause service degradation precisely when demand is highest. Availability risk extends to planned and unplanned outages: major API providers have experienced multi-hour outages affecting global customer bases.
+**Risk Description:** Foundation model APIs impose rate limits â€” maximum requests per minute, maximum tokens per minute â€” that can constrain throughput for high-volume applications. Rate limit encounters cause either API errors (hard failures) or queuing delays (soft failures). For applications where response time is critical â€” fraud detection assistance, real-time customer service â€” rate limiting can cause service degradation precisely when demand is highest. Availability risk extends to planned and unplanned outages: major API providers have experienced multi-hour outages affecting global customer bases.
 
 **Likelihood in Financial Services:** Medium. High-volume deployments are at meaningful risk of rate limit encounters; availability risk affects all API-dependent deployments.
 
@@ -557,11 +557,11 @@ Operational risk for LLMs encompasses risks from infrastructure, deployment, sup
 
 ### 4.6 Context Injection Attacks (Indirect Prompt Injection)
 
-**Risk Description:** Indirect prompt injection occurs when malicious instructions are embedded in content that the LLM retrieves or processes as context — documents, emails, web pages, database records — rather than in the direct user input. Unlike direct prompt injection (where the attacker has direct access to the user interface), indirect injection can be executed by any party who can influence content that the LLM will process. For a bank's document processing system, an attacker could embed malicious instructions in a loan application document, a regulatory filing, or a customer email, causing the LLM to execute attacker-specified behavior when processing that content.
+**Risk Description:** Indirect prompt injection occurs when malicious instructions are embedded in content that the LLM retrieves or processes as context â€” documents, emails, web pages, database records â€” rather than in the direct user input. Unlike direct prompt injection (where the attacker has direct access to the user interface), indirect injection can be executed by any party who can influence content that the LLM will process. For a bank's document processing system, an attacker could embed malicious instructions in a loan application document, a regulatory filing, or a customer email, causing the LLM to execute attacker-specified behavior when processing that content.
 
-For the detailed security taxonomy of prompt injection, see `../refs/owasp_top10_llm.md` (LLM01 — Prompt Injection).
+For the detailed security taxonomy of prompt injection, see `../standards/owasp_top10_llm.md` (LLM01 â€” Prompt Injection).
 
-**Likelihood in Financial Services:** High. Banks process enormous volumes of external content — customer documents, emails, third-party filings — all of which represent potential injection surfaces.
+**Likelihood in Financial Services:** High. Banks process enormous volumes of external content â€” customer documents, emails, third-party filings â€” all of which represent potential injection surfaces.
 
 **Potential Impact:**
 - *Security:* Unauthorized data exfiltration; unauthorized actions initiated by the LLM; bypass of safety controls
@@ -582,7 +582,7 @@ For the detailed security taxonomy of prompt injection, see `../refs/owasp_top10
 
 ### 4.7 Jailbreaking and Safety Bypass
 
-**Risk Description:** Jailbreaking refers to crafted prompt techniques that bypass foundation model safety training, causing models to produce content they were trained to refuse — harmful information, discriminatory content, regulatory violations, confidential disclosures. Research has demonstrated attack success rates approaching 97-99% against leading models using automated red-teaming and fuzzing techniques. For financial institutions that rely on foundation model safety training as a control, the near-universal exploitability of these controls is a governance vulnerability that cannot be treated as robust.
+**Risk Description:** Jailbreaking refers to crafted prompt techniques that bypass foundation model safety training, causing models to produce content they were trained to refuse â€” harmful information, discriminatory content, regulatory violations, confidential disclosures. Research has demonstrated attack success rates approaching 97-99% against leading models using automated red-teaming and fuzzing techniques. For financial institutions that rely on foundation model safety training as a control, the near-universal exploitability of these controls is a governance vulnerability that cannot be treated as robust.
 
 **Likelihood in Financial Services:** Medium-High. Deliberate jailbreaking is less common from internal users but remains a risk in customer-facing applications where adversarial users may attempt to manipulate AI system behavior.
 
@@ -604,9 +604,9 @@ For the detailed security taxonomy of prompt injection, see `../refs/owasp_top10
 
 ### 4.8 Supply Chain Risk
 
-**Risk Description:** LLM applications depend on a complex supply chain: foundation model weights, inference infrastructure, vector databases, embedding models, orchestration frameworks (LangChain, LlamaIndex), plugin ecosystems, and API integrations. Each supply chain component introduces potential compromise risk. Malicious fine-tunes — model weights deliberately poisoned before distribution — have been documented in the open-source model ecosystem. Compromised plugin code can be injected into LLM orchestration frameworks, causing malicious behavior at inference time.
+**Risk Description:** LLM applications depend on a complex supply chain: foundation model weights, inference infrastructure, vector databases, embedding models, orchestration frameworks (LangChain, LlamaIndex), plugin ecosystems, and API integrations. Each supply chain component introduces potential compromise risk. Malicious fine-tunes â€” model weights deliberately poisoned before distribution â€” have been documented in the open-source model ecosystem. Compromised plugin code can be injected into LLM orchestration frameworks, causing malicious behavior at inference time.
 
-For the detailed security taxonomy of supply chain risk, see `../refs/owasp_top10_llm.md` (LLM03 — Supply Chain).
+For the detailed security taxonomy of supply chain risk, see `../standards/owasp_top10_llm.md` (LLM03 â€” Supply Chain).
 
 **Likelihood in Financial Services:** Medium. Commercial foundation model providers have supply chain security practices, but the broader ecosystem of orchestration frameworks and plugins is less mature.
 
@@ -631,7 +631,7 @@ Conduct and consumer risk encompasses the risks that LLM outputs cause harm to c
 
 ### 5.1 Discriminatory Outputs in Credit and Insurance Decisions
 
-**Risk Description:** LLMs may generate outputs that exhibit discriminatory patterns in credit, insurance, and hiring decisions — either because training data encoded historical discrimination, or because model architecture propagates correlations between protected characteristics and adverse decisions. Research has demonstrated significant racial discrepancies in local LLM outputs for mortgage lending tasks, with biases exceeding those observed in empirical human lending data. Under the Equal Credit Opportunity Act (ECOA) and Fair Housing Act, lenders are prohibited from discrimination regardless of whether the discriminating system is human or AI. The CFPB and OCC have made clear that ECOA applies to AI-generated credit decisions.
+**Risk Description:** LLMs may generate outputs that exhibit discriminatory patterns in credit, insurance, and hiring decisions â€” either because training data encoded historical discrimination, or because model architecture propagates correlations between protected characteristics and adverse decisions. Research has demonstrated significant racial discrepancies in local LLM outputs for mortgage lending tasks, with biases exceeding those observed in empirical human lending data. Under the Equal Credit Opportunity Act (ECOA) and Fair Housing Act, lenders are prohibited from discrimination regardless of whether the discriminating system is human or AI. The CFPB and OCC have made clear that ECOA applies to AI-generated credit decisions.
 
 **Likelihood in Financial Services:** High. Any LLM deployed in credit decision support, underwriting assistance, or customer eligibility determination faces discrimination risk.
 
@@ -654,7 +654,7 @@ Conduct and consumer risk encompasses the risks that LLM outputs cause harm to c
 
 ### 5.2 Misleading Financial Information and Hallucinated Advice
 
-**Risk Description:** LLMs deployed in customer-facing financial services applications can generate responses that function as financial advice — even when not intended to do so. When that advice is based on hallucinated information, the customer harm is compounded. A virtual assistant that confidently states incorrect investment risk characteristics, incorrect fee structures, or incorrect account terms causes direct customer harm and potentially creates regulatory liability. Under Consumer Duty (UK), UDAP (US), and equivalent consumer protection frameworks, financial institutions are responsible for the accuracy of information provided to consumers, including through AI systems.
+**Risk Description:** LLMs deployed in customer-facing financial services applications can generate responses that function as financial advice â€” even when not intended to do so. When that advice is based on hallucinated information, the customer harm is compounded. A virtual assistant that confidently states incorrect investment risk characteristics, incorrect fee structures, or incorrect account terms causes direct customer harm and potentially creates regulatory liability. Under Consumer Duty (UK), UDAP (US), and equivalent consumer protection frameworks, financial institutions are responsible for the accuracy of information provided to consumers, including through AI systems.
 
 **Likelihood in Financial Services:** High. Customer-facing LLM applications that respond to product and financial questions are inherently at risk of generating misleading responses.
 
@@ -677,7 +677,7 @@ Conduct and consumer risk encompasses the risks that LLM outputs cause harm to c
 
 ### 5.3 Regulatory Liability for AI-Generated Customer Communications
 
-**Risk Description:** When a bank uses LLMs to draft or generate customer communications — account notices, product disclosures, terms and conditions updates, collection letters — those communications carry the same regulatory obligations as manually drafted communications. Regulatory requirements for financial communications include: accuracy and non-misleading content (UDAP, FCA Consumer Duty); required disclosure language (Truth in Lending Act, Truth in Savings Act); specific formatting requirements for adverse action notices (ECOA/Regulation B); and prohibition on unfair, deceptive, or abusive practices. LLM-generated communications may inadvertently omit required disclosures, include prohibited language, or present required information in non-compliant formats.
+**Risk Description:** When a bank uses LLMs to draft or generate customer communications â€” account notices, product disclosures, terms and conditions updates, collection letters â€” those communications carry the same regulatory obligations as manually drafted communications. Regulatory requirements for financial communications include: accuracy and non-misleading content (UDAP, FCA Consumer Duty); required disclosure language (Truth in Lending Act, Truth in Savings Act); specific formatting requirements for adverse action notices (ECOA/Regulation B); and prohibition on unfair, deceptive, or abusive practices. LLM-generated communications may inadvertently omit required disclosures, include prohibited language, or present required information in non-compliant formats.
 
 **Likelihood in Financial Services:** Medium-High. As banks deploy LLMs for marketing content, correspondence, and disclosures, regulatory compliance of AI-generated text becomes critical.
 
@@ -698,7 +698,7 @@ Conduct and consumer risk encompasses the risks that LLM outputs cause harm to c
 
 ### 5.4 Consumer Harm from Automated Decisions
 
-**Risk Description:** Where LLM outputs contribute to automated or semi-automated decisions affecting consumers — credit approvals, insurance underwriting, account closure, fraud alerts — consumers may suffer harm from incorrect decisions without meaningful recourse. Adverse action notice requirements under ECOA/Regulation B require specific, accurate reasons for credit denial. If an LLM-supported decision cannot produce those specific reasons — because the reasoning chain is opaque or stochastic — the institution is in breach of regulatory obligations. The CFPB's 2023 Circular explicitly stated that "creditors cannot state reasons for adverse actions by pointing to broad buckets" and must provide behavioral specificity.
+**Risk Description:** Where LLM outputs contribute to automated or semi-automated decisions affecting consumers â€” credit approvals, insurance underwriting, account closure, fraud alerts â€” consumers may suffer harm from incorrect decisions without meaningful recourse. Adverse action notice requirements under ECOA/Regulation B require specific, accurate reasons for credit denial. If an LLM-supported decision cannot produce those specific reasons â€” because the reasoning chain is opaque or stochastic â€” the institution is in breach of regulatory obligations. The CFPB's 2023 Circular explicitly stated that "creditors cannot state reasons for adverse actions by pointing to broad buckets" and must provide behavioral specificity.
 
 **Likelihood in Financial Services:** High. Any use of LLM in credit decision support must address ECOA/Regulation B adverse action notice requirements.
 
@@ -719,7 +719,7 @@ Conduct and consumer risk encompasses the risks that LLM outputs cause harm to c
 
 ### 5.5 Reputational Risk from Harmful or Offensive Outputs
 
-**Risk Description:** LLMs can generate outputs that are offensive, inappropriate, or harmful in ways that create severe reputational damage. Despite safety training, models can produce outputs that are discriminatory, sexually inappropriate, politically inflammatory, or otherwise harmful — particularly in adversarial scenarios (deliberate jailbreaking) or unusual conversational contexts. In financial services, where brand trust is a critical competitive asset, even isolated incidents of harmful AI outputs can cause disproportionate reputational damage.
+**Risk Description:** LLMs can generate outputs that are offensive, inappropriate, or harmful in ways that create severe reputational damage. Despite safety training, models can produce outputs that are discriminatory, sexually inappropriate, politically inflammatory, or otherwise harmful â€” particularly in adversarial scenarios (deliberate jailbreaking) or unusual conversational contexts. In financial services, where brand trust is a critical competitive asset, even isolated incidents of harmful AI outputs can cause disproportionate reputational damage.
 
 **Likelihood in Financial Services:** Medium. Customer-facing LLMs with millions of interactions generate substantial opportunity for edge cases, and adversarial users may deliberately seek harmful outputs.
 
@@ -741,7 +741,7 @@ Conduct and consumer risk encompasses the risks that LLM outputs cause harm to c
 
 ### 5.6 Manipulation Risk
 
-**Risk Description:** LLMs can be fine-tuned or prompted to favor particular outcomes — recommending specific products, steering customers toward high-margin options, or presenting information in ways that systematically favor the institution over the customer. Unlike human sales manipulation (which is governed by individual conduct obligations), AI-mediated manipulation can be applied uniformly across millions of customer interactions, creating systemic conduct risk. This risk is particularly acute when banks deploy LLMs in customer engagement contexts where there is inherent tension between customer interests and institutional revenue objectives.
+**Risk Description:** LLMs can be fine-tuned or prompted to favor particular outcomes â€” recommending specific products, steering customers toward high-margin options, or presenting information in ways that systematically favor the institution over the customer. Unlike human sales manipulation (which is governed by individual conduct obligations), AI-mediated manipulation can be applied uniformly across millions of customer interactions, creating systemic conduct risk. This risk is particularly acute when banks deploy LLMs in customer engagement contexts where there is inherent tension between customer interests and institutional revenue objectives.
 
 **Likelihood in Financial Services:** Medium. Most institutions have not deliberately designed manipulative LLMs, but the risk of inadvertent optimization toward commercial outcomes is real.
 
@@ -826,20 +826,20 @@ The following table provides a consolidated risk heat map across all four dimens
 
 ## 7. OWASP LLM Top 10 Mapping to Risk Dimensions
 
-The OWASP Top 10 for LLM Applications (see `../refs/owasp_top10_llm.md`) provides a security-focused taxonomy that maps to and complements this four-dimension financial risk taxonomy. The following table shows the mapping:
+The OWASP Top 10 for LLM Applications (see `../standards/owasp_top10_llm.md`) provides a security-focused taxonomy that maps to and complements this four-dimension financial risk taxonomy. The following table shows the mapping:
 
 | OWASP LLM Risk | Primary Dimension | Secondary Dimension | Key Overlap |
 |----------------|------------------|---------------------|-------------|
-| LLM01 — Prompt Injection | Operational | Conduct | Indirect prompt injection (Section 4.6) |
-| LLM02 — Sensitive Information Disclosure | Data | Conduct | PII memorization (Section 3.2), Privacy (Section 5.7) |
-| LLM03 — Supply Chain | Operational | Data | Supply chain risk (Section 4.8), Training data contamination (Section 3.1) |
-| LLM04 — Data and Model Poisoning | Data | Operational | RAG corpus poisoning (Section 3.6), Training data contamination (Section 3.1) |
-| LLM05 — Insecure Output Handling | Conduct | Operational | AI communication liability (Section 5.3), Hallucination (Section 2.1) |
-| LLM06 — Excessive Agency | Operational | Conduct | Emergent capabilities (Section 2.7) — expanded in agentic AI governance file |
-| LLM07 — System Prompt Leakage | Operational | Data | Fine-tuning data leakage (Section 3.4) |
-| LLM08 — Vector and Embedding Weaknesses | Data | Operational | RAG retrieval errors (Section 3.5), Embedding model vulnerabilities (Section 3.7) |
-| LLM09 — Misinformation | Conduct | Model | Hallucination (Section 2.1), Misleading financial information (Section 5.2) |
-| LLM10 — Unbounded Consumption | Operational | — | Cost unpredictability (Section 4.3), Rate limiting (Section 4.4) |
+| LLM01 â€” Prompt Injection | Operational | Conduct | Indirect prompt injection (Section 4.6) |
+| LLM02 â€” Sensitive Information Disclosure | Data | Conduct | PII memorization (Section 3.2), Privacy (Section 5.7) |
+| LLM03 â€” Supply Chain | Operational | Data | Supply chain risk (Section 4.8), Training data contamination (Section 3.1) |
+| LLM04 â€” Data and Model Poisoning | Data | Operational | RAG corpus poisoning (Section 3.6), Training data contamination (Section 3.1) |
+| LLM05 â€” Insecure Output Handling | Conduct | Operational | AI communication liability (Section 5.3), Hallucination (Section 2.1) |
+| LLM06 â€” Excessive Agency | Operational | Conduct | Emergent capabilities (Section 2.7) â€” expanded in agentic AI governance file |
+| LLM07 â€” System Prompt Leakage | Operational | Data | Fine-tuning data leakage (Section 3.4) |
+| LLM08 â€” Vector and Embedding Weaknesses | Data | Operational | RAG retrieval errors (Section 3.5), Embedding model vulnerabilities (Section 3.7) |
+| LLM09 â€” Misinformation | Conduct | Model | Hallucination (Section 2.1), Misleading financial information (Section 5.2) |
+| LLM10 â€” Unbounded Consumption | Operational | â€” | Cost unpredictability (Section 4.3), Rate limiting (Section 4.4) |
 
 ---
 
@@ -851,33 +851,33 @@ Understanding how LLM risks compare to traditional ML model risks is essential f
 
 The following risks have no meaningful analog in traditional ML model governance and require entirely new controls:
 
-- **Hallucination** — Traditional models produce outputs within trained distributions; LLMs generate novel text that may be fabricated
-- **Prompt sensitivity** — Traditional models have fixed input schemas; LLMs respond to unstructured natural language with extreme input sensitivity
-- **Indirect prompt injection** — Traditional models process structured data inputs that cannot contain hidden instructions; LLMs process natural language that can embed adversarial instructions
-- **Context window truncation** — Traditional models process fixed-length feature vectors; LLMs have context limits with silent truncation behavior
-- **Jailbreaking** — Traditional models have stable behavioral characteristics; LLMs can be manipulated into behaving outside trained parameters through adversarial input
-- **Benchmark gaming / evaluation contamination** — Traditional model validation uses clean train/test splits; LLM evaluation is complicated by training data contamination in public benchmarks
+- **Hallucination** â€” Traditional models produce outputs within trained distributions; LLMs generate novel text that may be fabricated
+- **Prompt sensitivity** â€” Traditional models have fixed input schemas; LLMs respond to unstructured natural language with extreme input sensitivity
+- **Indirect prompt injection** â€” Traditional models process structured data inputs that cannot contain hidden instructions; LLMs process natural language that can embed adversarial instructions
+- **Context window truncation** â€” Traditional models process fixed-length feature vectors; LLMs have context limits with silent truncation behavior
+- **Jailbreaking** â€” Traditional models have stable behavioral characteristics; LLMs can be manipulated into behaving outside trained parameters through adversarial input
+- **Benchmark gaming / evaluation contamination** â€” Traditional model validation uses clean train/test splits; LLM evaluation is complicated by training data contamination in public benchmarks
 
 ### Risks That Are Materially Amplified for LLMs
 
 The following risks exist in traditional ML but are substantially more severe or more complex to manage for LLMs:
 
-- **Model version drift** — Traditional model versions are explicitly deployed; LLM API versions can change behavior without formal release management
-- **Training data opacity** — Traditional models use bank-curated training data; LLM training data is largely undisclosed to the deploying institution
-- **PII memorization** — Traditional models do not memorize training data verbatim; LLMs can recall and reproduce training data at inference time
-- **Emergent capabilities** — Traditional models do only what they were trained to do; LLMs may exhibit capabilities not anticipated in pre-deployment testing
-- **Overconfidence calibration** — Traditional probabilistic models can provide calibrated uncertainty estimates; LLMs present outputs with uniform confidence regardless of actual accuracy
-- **Supply chain complexity** — Traditional model supply chains are simple; LLM applications involve foundation models, embedding models, orchestration frameworks, vector databases, and plugin ecosystems
+- **Model version drift** â€” Traditional model versions are explicitly deployed; LLM API versions can change behavior without formal release management
+- **Training data opacity** â€” Traditional models use bank-curated training data; LLM training data is largely undisclosed to the deploying institution
+- **PII memorization** â€” Traditional models do not memorize training data verbatim; LLMs can recall and reproduce training data at inference time
+- **Emergent capabilities** â€” Traditional models do only what they were trained to do; LLMs may exhibit capabilities not anticipated in pre-deployment testing
+- **Overconfidence calibration** â€” Traditional probabilistic models can provide calibrated uncertainty estimates; LLMs present outputs with uniform confidence regardless of actual accuracy
+- **Supply chain complexity** â€” Traditional model supply chains are simple; LLM applications involve foundation models, embedding models, orchestration frameworks, vector databases, and plugin ecosystems
 
 ### Risks That Are Continuous from Traditional ML
 
 The following risks require the same governance approach for LLMs as for traditional models, though the specific controls must adapt:
 
-- **Training data bias / discrimination risk** — Both traditional and LLM models can encode discriminatory patterns from training data
-- **Out-of-distribution behavior** — Both model types can fail on inputs outside the training distribution
-- **Vendor concentration risk** — Both model types create vendor dependency, though LLM dependency is typically higher
-- **Documentation and reproducibility** — Both model types require documentation and audit trail management
-- **Model deprecation** — Both traditional and LLM model versions can be deprecated, requiring migration planning
+- **Training data bias / discrimination risk** â€” Both traditional and LLM models can encode discriminatory patterns from training data
+- **Out-of-distribution behavior** â€” Both model types can fail on inputs outside the training distribution
+- **Vendor concentration risk** â€” Both model types create vendor dependency, though LLM dependency is typically higher
+- **Documentation and reproducibility** â€” Both model types require documentation and audit trail management
+- **Model deprecation** â€” Both traditional and LLM model versions can be deprecated, requiring migration planning
 
 ---
 
@@ -885,13 +885,13 @@ The following risks require the same governance approach for LLMs as for traditi
 
 Certain characteristics of the financial services industry intensify the risks described above:
 
-**Regulatory Density:** Banking is one of the most heavily regulated industries globally. Every LLM output that intersects with regulatory obligations — credit decisions, customer communications, compliance interpretations, regulatory reports — carries heightened regulatory risk. The volume of regulatory touchpoints means that even low-frequency failure modes (hallucination at 3% frequency) produce material compliance events at banking scale.
+**Regulatory Density:** Banking is one of the most heavily regulated industries globally. Every LLM output that intersects with regulatory obligations â€” credit decisions, customer communications, compliance interpretations, regulatory reports â€” carries heightened regulatory risk. The volume of regulatory touchpoints means that even low-frequency failure modes (hallucination at 3% frequency) produce material compliance events at banking scale.
 
 **High-Stakes Decisions:** Unlike consumer internet applications where LLM errors are primarily a user experience issue, banking LLM applications support decisions with significant financial consequences for customers: credit approvals, insurance coverage, investment recommendations. The consequence of errors is therefore amplified beyond what the error frequency alone would suggest.
 
 **Information Asymmetry:** Bank customers often lack the financial sophistication to detect erroneous AI-generated financial information. Unlike professional users who can identify hallucinations in their domain, retail customers may treat bank AI outputs as authoritative. This amplifies the consumer harm dimension of all Model Risk errors.
 
-**Systemic Risk Concentration:** Large financial institutions process millions of interactions through the same foundation models. If a foundation model exhibits systematic failure — biased outputs, hallucination about a specific type of financial instrument, incorrect regulatory interpretation — the failure affects millions of customers simultaneously. This systemic dimension amplifies the potential impact of Model Risk and Conduct Risk categories.
+**Systemic Risk Concentration:** Large financial institutions process millions of interactions through the same foundation models. If a foundation model exhibits systematic failure â€” biased outputs, hallucination about a specific type of financial instrument, incorrect regulatory interpretation â€” the failure affects millions of customers simultaneously. This systemic dimension amplifies the potential impact of Model Risk and Conduct Risk categories.
 
 **Real-Time Market Interaction:** For banks deploying LLMs in trading support, market intelligence, or real-time risk assessment, output errors can cause immediate financial market impacts rather than delayed harm.
 
@@ -899,13 +899,14 @@ Certain characteristics of the financial services industry intensify the risks d
 
 ## 10. Cross-References
 
-- **OWASP Top 10 for LLM Applications** — Full security-focused risk taxonomy that complements and overlaps with Sections 4 and 5 above: see `../refs/owasp_top10_llm.md`
-- **OWASP Top 10 for Agentic Applications** — Extended risk taxonomy for autonomous AI agents, which amplifies many of the risks above: see `../refs/owasp_top10_agentic.md`
-- **Gen AI Governance in Banking** — Governance frameworks and institutional approaches that implement controls for these risks: see [07_genai_governance_banking.md](07_genai_governance_banking.md)
-- **Agentic AI Governance** — How agentic deployment amplifies Model Risk, Operational Risk, and Conduct Risk: see [09_agentic_ai_governance.md](09_agentic_ai_governance.md)
-- **Explainability, Fairness, and Bias** — Deep treatment of discriminatory output risk and adverse action notice compliance: see [12_explainability_fairness_bias.md](12_explainability_fairness_bias.md)
-- **Big Tech MRM Guidance** — How technology providers frame AI risk for deploying institutions: see [11_big_tech_mrm_guidance.md](11_big_tech_mrm_guidance.md)
+- **OWASP Top 10 for LLM Applications** â€” Full security-focused risk taxonomy that complements and overlaps with Sections 4 and 5 above: see `../standards/owasp_top10_llm.md`
+- **OWASP Top 10 for Agentic Applications** â€” Extended risk taxonomy for autonomous AI agents, which amplifies many of the risks above: see `../standards/owasp_top10_agentic.md`
+- **Gen AI Governance in Banking** â€” Governance frameworks and institutional approaches that implement controls for these risks: see [07_genai_governance_banking.md](07_genai_governance_banking.md)
+- **Agentic AI Governance** â€” How agentic deployment amplifies Model Risk, Operational Risk, and Conduct Risk: see [09_agentic_ai_governance.md](09_agentic_ai_governance.md)
+- **Explainability, Fairness, and Bias** â€” Deep treatment of discriminatory output risk and adverse action notice compliance: see [12_explainability_fairness_bias.md](12_explainability_fairness_bias.md)
+- **Big Tech MRM Guidance** â€” How technology providers frame AI risk for deploying institutions: see [11_big_tech_mrm_guidance.md](11_big_tech_mrm_guidance.md)
 
 ---
 
 *Sources consulted: NIST AI 600-1 Generative AI Profile (July 2024); NIST AI 100-1 AI Risk Management Framework (January 2023); FSB Financial Stability Implications of AI (November 2024); FSB Monitoring AI Adoption Report (October 2025); EU AI Act (Regulation EU 2024/1689); ECB Supervisory Guide to Internal Models (July 2025); CFPB Consumer Protection Circular 2023-03; OCC/Fed/FDIC SR 26-2 (April 2026); MITRE ATLAS adversarial AI framework; PoisonedRAG research (2024); Vectara hallucination research (2024); BioTech Magazine LLM Hallucination in Financial Institutions (2025); Deloitte Agentic AI Risks in Banking (2025); US Treasury Financial Services AI RMF (February 2026); Truffle Security training data research (2025); CFPB AI lending comment letter (August 2024); Brookings Institution AI fair lending policy (2024); Skadden AI fair lending analysis (2024).*
+
